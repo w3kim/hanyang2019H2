@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            var x = 10;     // declaring and initializing a variable
+            var y;          // declaration
+            y = 20;         // and initialization can be separated
+            console.log(x + y); // should output 30
+            // variables are updatable, but constants are not
+            x = 20;         // updating a variable is okay
+            const c = 10;   // constant declaration
+            console.log(x + c); // resulting 30
+            c = 20;         // ERROR, TypeError: Assignment to constant variable.
+        </script>        
+    </body>
+</html>

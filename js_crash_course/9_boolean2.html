@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            // Recal == *evaluates* both LHS and RHS before comparison
+            // === on the other hand literally compares LHS and RHS including the type
+            console.log(eval('1'));     // `eval` evaluates input; returning 1
+            console.log(1 == '1');      // true because eval('1') is 1
+            console.log(1 === '1');     // false because 1 is number and '1' is string
+        </script>
+    </body>
+</html>

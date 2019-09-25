@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <script>
+        var x = 1; var y = 2;
+        // LHS < RHS returns `true` iff LHS is strictly less than RHS; otherwise false
+        console.log(x < y);         // true            
+        console.log(y < x);         // false            
+        // LHS > RHS returns `true` iff LHS is strictly greater than RHS; otherwise false
+        console.log(x > y);         // false
+        console.log(y > x);         // true
+        // LHS != RHS returns `true` iff LHS is not equal to RHS; otherwise false            
+        console.log(x != y);        // true
+        console.log(x != '1');      // false
+        console.log(x !== '1');     // true; !== works similarly with ===
+    </script>
+</body>
+</html>

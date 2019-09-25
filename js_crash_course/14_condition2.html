@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <script>
+        // Number(x) returns a number iff x is a number; NaN otherwise
+        var x = Number(prompt('Please enter a number'));
+        
+        if (!x) { // NaN is interpreted as `false`; negating NaN results `true`
+            // this block gets executed only if x is NaN
+            alert('Not a number!');
+        } else {            
+            // x is a number
+            if (x < 10) {
+                // x is less than 10
+                alert('Small');
+            } else {
+                // x is greater than or equal to 10
+                alert('Big');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            var x = "first";
+            console.log(x, x.length);   // should output as first 5
+            x += " second";
+            console.log(x);             // first second
+            x += 10;                    // treated as string; 10 is appended at the end of x
+            console.log(x);             // first second10
+            x = "abcde";
+            console.log(x[0]);          // a
+            console.log(x.charAt(0));   // a
+            console.log(x.substring(1, 3)); // bc
+        </script>
+    </body>
+</html>
