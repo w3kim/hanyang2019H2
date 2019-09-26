@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html><body>
+    <script>
+        function dist(x1, x2) {
+            if (x1 < x2) {
+                return x2 - x1;
+            } else {
+                return x1 - x2;
+            }
+        } // a function calculating difference between points (on the same axis)
+        function Point(x, y) {      // constructor for Point object
+            this.x = x;             // initialize states
+            this.y = y;
+            this.getDistanceFrom = function (point) {   // a function calculating 2D distance
+                var dx = dist(this.x, point.x);         // between this point and the input point
+                var dy = dist(this.y, point.y);
+                return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+            }
+        }
+        var p1 = new Point(0, 0);
+        var p2 = new Point(1, 1);
+        console.log(p1.getDistanceFrom(p2));
+    </script>
+</body></html>
