@@ -1,0 +1,11 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# For Windows users, make sure you run CMD with admin privilege 
+# so you can create symlinks. Use Windows+R to open the "Run" box,
+# type "cmd", and then press Ctrl+Shift+Enter to run as an administrator.
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.provision :shell, path: "bootstrap.sh"
+  config.vm.synced_folder "project/", "/home/vagrant/project"
+end
