@@ -1,2 +1,2 @@
-*.log.vagrant
+.vagrant
 *.log
