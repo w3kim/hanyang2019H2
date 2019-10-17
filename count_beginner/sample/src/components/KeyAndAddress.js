@@ -1,6 +1,7 @@
 import React from 'react';
 import caver from '../klaytn/caver';
 
+// Step 4
 // demonstrating child -> parent call propagation via props
 class PrivateKeyInput extends React.Component {
     constructor(props) {
@@ -34,6 +35,9 @@ class PrivateKeyInput extends React.Component {
     }
 }
 
+// export default PrivateKeyInput
+
+// Step 5
 // demonstrating the use of child components in a user created component
 // demonstrating the use of passing functions to a child component
 class KeyAndAddress extends React.Component {

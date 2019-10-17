@@ -8,6 +8,8 @@
  * For testing/developing purpose, we use 'https://api.baobab.klaytn.net:8651',
  * the URL pointing to the public end-point available for Baobab testnet.
  */
+
+// Step 6
 import Caver from 'caver-js'
 
 const BAOBAB_TESTNET_RPC_URL = 'https://api.baobab.klaytn.net:8651/'

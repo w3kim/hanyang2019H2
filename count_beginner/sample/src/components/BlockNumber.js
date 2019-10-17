@@ -2,6 +2,7 @@
 import React from 'react'
 import caver from '../klaytn/caver'
 
+// Step 3
 /**
  * BlockNumber component get the current block number per 1 second.(1000ms)
  * current block number can be fetched through caver.js library

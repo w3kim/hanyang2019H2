@@ -4,6 +4,7 @@ import BlockNumber from './components/BlockNumber'
 import Count from './components/Count'
 import KeyAndAddress from './components/KeyAndAddress'
 
+// Step 2: simple component
 // simple component
 class Greeting extends React.Component {
     render() {
@@ -13,10 +14,12 @@ class Greeting extends React.Component {
     }
 }
 
+// Step 1: App component rendering
 // root component
 class App extends React.Component {
     constructor(props) {
         super(props);
+        // Step 7
         // reference to a child component
         this.countRef = React.createRef();
     }
@@ -29,10 +32,14 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <Greeting />
-                <BlockNumber />
-                <KeyAndAddress propagateKey={this.propagateKey} />
-                <Count ref={this.countRef} />
+                <Greeting />        {/* first component     */}
+                <BlockNumber />     {/* caver-js component  */}
+                <KeyAndAddress      
+                    propagateKey={this.propagateKey} 
+                />                  {/* user private key    */}
+                <Count              
+                    ref={this.countRef} 
+                />                  {/* main logic          */}
             </div>
         );
     }

@@ -4,6 +4,7 @@ import caver from "../klaytn/caver"
 
 const ABI = require("../assets/abi.json");
 
+// Step 7
 class Count extends React.Component {
 
     constructor() {
