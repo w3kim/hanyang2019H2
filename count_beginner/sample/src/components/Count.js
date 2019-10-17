@@ -1,10 +1,10 @@
 // Modified version of https://github.com/klaytn/countbapp/blob/master/src/components/Count.js
-import React, { Component } from 'react'
+import React from 'react'
 import caver from "../klaytn/caver"
 
 const ABI = require("../assets/abi.json");
 
-class Count extends Component {
+class Count extends React.Component {
 
     constructor() {
         super();
@@ -18,16 +18,20 @@ class Count extends Component {
 
         this.state = {
             count: '',
-            lastParticipant: ''
+            lastParticipant: '',
+            privateKey: ''
         };
 
         this.wallet = caver.klay.accounts.wallet;
-        if (process.env.NODE_ENV === "development") {
-            this.wallet.add(process.env.REACT_APP_PRIVATE_KEY);
-        } else if (process.env.NODE_ENV === "production") {
-            // TODO securely load user private key
-        }
+    }
 
+    // exposed function
+    setPrivateKey(key) {
+        this.wallet.clear();
+        this.wallet.add(key);
+        this.setState({
+            privateKey: key
+        });
     }
 
     intervalId = null
@@ -146,7 +150,7 @@ class Count extends Component {
     }
 
     render() {
-        const { lastParticipant, count, txHash } = this.state;
+        const { lastParticipant, count, txHash, privateKey } = this.state;
         return (
             <div className="Count">
                 {Number(lastParticipant) !== 0 && (
@@ -155,20 +159,29 @@ class Count extends Component {
                     </div>
                 )}
                 <div className="Count__count">COUNT: {count}</div>
-                <button onClick={this.callPlus}>
-                    +
-                </button>
-                <button onClick={this.callMinus} disabled={count === 0}>
-                    -
-                </button>
-                {txHash && (
-                    <div className="Count__lastTransaction">
-                        <p className="Count__lastTransactionMessage">
-                            You can check your last transaction in klaytnscope:
-                        </p>
-                        <a target="_blank" rel="noopener noreferrer" href={`https://baobab.scope.klaytn.com/tx/${txHash}`} className="Count__lastTransactionLink">
-                            {txHash}
-                        </a>
+                {!privateKey && (
+                    <div>
+                        User must provide a private key to start
+                    </div>
+                )}
+                {privateKey && (
+                    <div>
+                        <button onClick={this.callPlus}>
+                            +
+                        </button>
+                        <button onClick={this.callMinus} disabled={count === 0}>
+                            -
+                        </button>
+                        {txHash && (
+                            <div className="Count__lastTransaction">
+                                <p className="Count__lastTransactionMessage">
+                                    You can check your last transaction in klaytnscope:
+                                </p>
+                                <a target="_blank" rel="noopener noreferrer" href={`https://baobab.scope.klaytn.com/tx/${txHash}`} className="Count__lastTransactionLink">
+                                    {txHash}
+                                </a>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

@@ -1,5 +1,5 @@
 // Taken directly from https://github.com/klaytn/countbapp/blob/master/src/components/BlockNumber.js
-import React, { Component } from 'react'
+import React from 'react'
 import caver from '../klaytn/caver'
 
 /**
@@ -9,7 +9,7 @@ import caver from '../klaytn/caver'
  * cf) If you want to connect to specific klaytn node,
  * change 'rpcURL' config in klaytn/caver.js
  */
-class BlockNumber extends Component {
+class BlockNumber extends React.Component {
   /**
    * BlockNumber component has a 'currentBlockNumber' state.
    */

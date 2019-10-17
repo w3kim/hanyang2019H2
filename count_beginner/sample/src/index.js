@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import BlockNumber from './components/BlockNumber'
 import Count from './components/Count'
-import caver from './klaytn/caver'
+import KeyAndAddress from './components/KeyAndAddress'
 
+// simple component
 class Greeting extends React.Component {
     render() {
         return (
@@ -12,78 +13,32 @@ class Greeting extends React.Component {
     }
 }
 
-class PrivateKeyInput extends React.Component {
+// root component
+class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            privateKey: ''
-        };
+        // reference to a child component
+        this.countRef = React.createRef();
     }
-    
-    handleChange = (e) => {
-        this.setState({
-            privateKey: e.target.value
-        });
-    }
+
+    // note that the following definition must be declared as a variable
+    propagateKey = (key) => {
+        this.countRef.current.setPrivateKey(key);
+    };
 
     render() {
-        const { privateKey } = this.state;
         return (
-            <div>
-                <div>
-                    <span className="label">Private Key</span>
-                    <span>
-                        <input 
-                            placeholder="your private key starting with 0x"
-                            value={this.state.privateKey}
-                            onChange={this.handleChange}
-                        />
-                        <button className="set" onClick={() => this.props.showAddress(privateKey)}>Set</button>
-                    </span>
-                </div>                
-            </div>
-            
-        );
-    }
-}
-
-class Address extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            privateKey: ''
-        };
-    }
-
-    reloadAddress = (key) => {
-        this.setState({
-            privateKey: key
-        });
-    }
-
-    render() {
-        let account = { address: "not_set" }
-        const { privateKey } = this.state;
-        if (privateKey) {
-            account = caver.klay.accounts.privateKeyToAccount(privateKey);
-        } 
-
-        return (
-            <div>
-                <PrivateKeyInput showAddress={this.reloadAddress} />
-                <span>My Address: </span>
-                {account.address}
+            <div className="App">
+                <Greeting />
+                <BlockNumber />
+                <KeyAndAddress propagateKey={this.propagateKey} />
+                <Count ref={this.countRef} />
             </div>
         );
     }
 }
 
 ReactDOM.render(
-    <div className="App">
-        <Greeting />        
-        <BlockNumber />
-        <Address />
-        <Count />
-    </div>,
+    <App />,
     document.getElementById('root')
 );
