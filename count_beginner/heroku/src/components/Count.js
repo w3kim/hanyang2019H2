@@ -153,36 +153,50 @@ class Count extends React.Component {
     render() {
         const { lastParticipant, count, txHash, privateKey } = this.state;
         return (
-            <div className="Count">
-                {Number(lastParticipant) !== 0 && (
-                    <div className="Count__lastParticipant">
-                        last participant: {lastParticipant}
-                    </div>
-                )}
-                <div className="Count__count">COUNT: {count}</div>
+            <div class='jumbotron'>
                 {!privateKey && (
-                    <div>
+                    <div class="alert alert-danger" >
                         User must provide a private key to start
                     </div>
                 )}
+
+                <div>
+                    <h1 class='display-2'>{count}</h1>
+                </div>
+                
                 {privateKey && (
                     <div>
-                        <button onClick={this.callPlus}>
-                            +
-                        </button>
-                        <button onClick={this.callMinus} disabled={count === 0}>
-                            -
-                        </button>
+                        <div>
+                            <span>
+                                <button onClick={this.callPlus} class='btn btn-primary btn-lg' type='button'>
+                                    +
+                                </button>
+                            </span>
+                            <span>
+                                <button onClick={this.callMinus} disabled={count === 0} class='btn btn-danger btn-lg' type='button'>
+                                    -
+                                </button>        
+                            </span>
+                        </div>
+                        <br />                
                         {txHash && (
-                            <div className="Count__lastTransaction">
+                            <div class="alert alert-success" role="alert">
+                                <h4 class="alert-heading">Done!</h4>
                                 <p className="Count__lastTransactionMessage">
                                     You can check your last transaction in klaytnscope:
                                 </p>
+                                <hr />
                                 <a target="_blank" rel="noopener noreferrer" href={`https://baobab.scope.klaytn.com/tx/${txHash}`} className="Count__lastTransactionLink">
                                     {txHash}
                                 </a>
                             </div>
                         )}
+                    </div>
+                )}
+                <br />
+                {Number(lastParticipant) !== 0 && (
+                    <div class="alert alert-light" role="alert">
+                        last participant: {lastParticipant}
                     </div>
                 )}
             </div>

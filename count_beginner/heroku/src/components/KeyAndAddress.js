@@ -21,16 +21,21 @@ class PrivateKeyInput extends React.Component {
         const { privateKey } = this.state;
         return (
             <div>
-                <span className="label">Private Key</span>
-                <span>
-                    <input
-                        placeholder="your private key starting with 0x"
-                        value={this.state.privateKey}
-                        onChange={this.handleChange}
-                    />
-                    <button className="set" onClick={() => this.props.reloadAddress(privateKey)}>Set</button>
-                </span>
-            </div>
+                <form>
+                    <div class='form-group'>
+                        <label for='inputKey'>Private Key</label>
+                        <input
+                            type='text'
+                            placeholder="your private key starting with 0x"
+                            value={this.state.privateKey}
+                            onChange={this.handleChange}
+                            id="inputKey"
+                            class='form-control'
+                        />                        
+                    </div>
+                    <button type='button' class="btn btn-primary" onClick={() => this.props.reloadAddress(privateKey)}>Set</button>
+                </form>                
+            </div>            
         );
     }
 }
@@ -65,8 +70,19 @@ class KeyAndAddress extends React.Component {
         return (
             <div>
                 <PrivateKeyInput reloadAddress={this.reloadAddress} />
-                <span>My Address: </span>
-                {account.address}
+                <hr />
+                <form>
+                    <div class='form-group'>
+                        <label for='addressField'>My Address</label>
+                        <input 
+                            id='addressField'
+                            type='text' 
+                            class='form-control'
+                            disabled
+                            value={account.address}
+                        />
+                    </div>
+                </form>
             </div>
         );
     }

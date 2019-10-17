@@ -4,12 +4,15 @@ import BlockNumber from './components/BlockNumber'
 import Count from './components/Count'
 import KeyAndAddress from './components/KeyAndAddress'
 
+import './index.scss'
+import './App.scss'
+
 // Step 2: simple component
 // simple component
 class Greeting extends React.Component {
     render() {
         return (
-            <div><h1>Hello, Count BApp</h1></div>
+            <div><h1 class='display-4'>Hello, Count BApp</h1></div>
         );
     }
 }
@@ -34,6 +37,7 @@ class App extends React.Component {
             <div className="App">
                 <Greeting />        {/* first component     */}
                 <BlockNumber />     {/* caver-js component  */}
+                <hr />
                 <KeyAndAddress      
                     propagateKey={this.propagateKey} 
                 />                  {/* user private key    */}

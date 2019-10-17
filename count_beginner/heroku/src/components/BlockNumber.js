@@ -56,8 +56,10 @@ class BlockNumber extends React.Component {
   render() {
     const { currentBlockNumber } = this.state
     return (
-      <div className="BlockNumber">
-        <p className="BlockNumber__current">Block No. {currentBlockNumber}</p>
+      <div>
+        <h4>
+          <span class='badge badge-success'>Block No. {currentBlockNumber}</span>
+        </h4>
       </div>
     )
   }
