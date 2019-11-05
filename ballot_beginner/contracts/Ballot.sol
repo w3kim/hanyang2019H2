@@ -37,13 +37,16 @@ contract Ballot {
 
     // Idea 1: Close Ballot when the chairperson says so.
     // This indicates the current status of this Ballot.
-    bool isClosed;
+    Status public status;
 
     // ==========
     // TODO recap `constructor`.
     // TODO explain reference types with modifiers: `memory`, `storage`, and `calldata`.
     // ==========
     /// Create a new ballot to choose one of `proposalNames`.
+    // Create a new ballot to choose one of `proposalNames`.
+    // e.g., a ballot with proposal names ["test1", "test2", "test3", "test4"] is equal to the following:
+    // ["0x7465737431000000000000000000000000000000000000000000000000000000", "0x7465737432000000000000000000000000000000000000000000000000000000", "0x7465737433000000000000000000000000000000000000000000000000000000","0x7465737434000000000000000000000000000000000000000000000000000000" ]
     constructor(bytes32[] memory proposalNames) public {
         chairperson = msg.sender;
         voters[chairperson].weight = 1;
@@ -62,7 +65,7 @@ contract Ballot {
         }
 
         // Idea 1: Close Ballot when the chairperson says so.
-        isClosed = false;
+        status = Status.Open;
     }
 
     // ==========
@@ -83,7 +86,7 @@ contract Ballot {
         // explanation about what went wrong.
         
         // ==========
-        // Idea 1: require(!isClosed, "The ballot is closed");
+        // Idea 1: require(status == Status.Open, "The ballot is closed");
         // ==========
 
         require(
@@ -104,7 +107,7 @@ contract Ballot {
     /// Delegate your vote to the voter `to`.
     function delegate(address to) public {
         // ==========
-        // Idea 1: require(!isClosed, "The ballot is closed");
+        // Idea 1: require(status == Status.Open, "The ballot is closed");
         // ==========
 
         // assigns reference
@@ -149,7 +152,7 @@ contract Ballot {
     /// to proposal `proposals[proposal].name`.
     function vote(uint proposal) public {
         // ==========
-        // Idea 1: require(!isClosed, "The ballot is closed");
+        // Idea 1: require(status == Status.Open, "The ballot is closed");
         // ==========
 
         Voter storage sender = voters[msg.sender];
@@ -188,14 +191,17 @@ contract Ballot {
     }
 
     // Idea 1: Close Ballot when the chairperson says so
+    enum Status { Open, Closed }
     function closeBallot() public {
         require(msg.sender == chairperson, "Only the chairperson can close the ballot");
-        isClosed = true;
+        status = Status.Closed;
     }
 
     // Idea 2: Bulk Registration
     // Give voters in `voterList` the right to vote on this ballot.
     // May only be called by `chairperson`.
+    // e.g.,
+    // ["0x5e47b195eeb11d72f5e1d27aebb6d341f1a9bedb", "0xd0ea3e0eabaea095ea3ba231c043dbf8c0feb40a", "0x34ca11930cd5e0971d8bb9860d9b977d3bb9187b"]
     function giveRightToVoteToAll(address[] memory voterList) public {
         // ==========
         // Idea 1: require(!isClosed, "The ballot is closed");
