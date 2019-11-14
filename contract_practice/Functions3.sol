@@ -8,7 +8,9 @@ contract WithFallback {
 }
 
 contract WithFallbackPayable {
+    event FallbackCalled(uint amount);
+
     function () external payable {
-        // do nothing
+        emit FallbackCalled(msg.value);
     }
 }
