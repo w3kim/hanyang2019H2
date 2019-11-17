@@ -68,6 +68,10 @@ contract Ballot {
         status = Status.Open;
     }
 
+    function getNumProposals() public view returns (uint) {
+        return proposals.length;
+    }
+
     // ==========
     // TODO explain `require(predicate, message)` with an example or two.
     // ==========
