@@ -7,7 +7,8 @@ class Voting extends React.Component {
         this.state = {
             proposals: [],
             selectedProposal: -1,
-            voted: false
+            voted: false,
+            isVoter: false
         }
         this.refresh();
     }
@@ -25,7 +26,8 @@ class Voting extends React.Component {
         
         this.setState({
             proposals: p,
-            voted: v.voted
+            voted: v.voted,
+            isVoter: v.weight > 0 || v.voted
         });
     }
 
@@ -59,7 +61,10 @@ class Voting extends React.Component {
     }
 
     render() {
-        const { proposals, selectedProposal, voted } = this.state;
+        const { proposals, selectedProposal, voted, isVoter } = this.state;
+        if (!isVoter) {
+            return (<div>Voter only</div>);
+        }
         return (
             <div>
                 <h2>Voting</h2>

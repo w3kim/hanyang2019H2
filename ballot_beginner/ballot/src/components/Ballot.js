@@ -12,6 +12,7 @@ class Ballot extends React.Component {
     }
 
     setup(contractAddress, voterKey) {
+        caver.klay.accounts.wallet.clear();
         this.setState({
             contractAddress: contractAddress,
             voterKey: voterKey

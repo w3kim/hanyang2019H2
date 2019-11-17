@@ -6,7 +6,8 @@ class Chairperson extends React.Component {
         super(props);
         this.state = {
             address: '',
-            isChairperson: false
+            isChairperson: false,
+            isInProgress: false
         }
         this.isChairperson();
     }
@@ -26,25 +27,59 @@ class Chairperson extends React.Component {
         });
     }
 
+    invalidate = (receiptOrError) => {
+        console.log(receiptOrError);
+        this.setState({
+            address: '',
+            isInProgress: false
+        });
+    }
+
     giveRightToVote = (ev) => {
         ev.preventDefault();
+        const { address } = this.state;
+        this.setState({
+            isInProgress: true
+        });
+
+        // TODO validate address
+        
+        this.props.contract.methods.giveRightToVote(address).send({
+            from: caver.klay.accounts.wallet[0].address,
+            gas: '300000'
+        })
+        .once('transactionHash', console.log)
+        .once('receipt', this.invalidate)
+        .once('error', this.invalidate);
     }
 
     render() {
-        const { address, isChairperson } = this.state;
+        const { address, isChairperson, isInProgress } = this.state;
         if (!isChairperson) {
             return (
                 <div>Chairperson only</div>
             )
         }
+
+        let inputField;
+        if (isInProgress) {
+            inputField = <input type='text' 
+                            placeholder='Klaytn address to give right to vote' 
+                            onChange={ this.onAddressChange }
+                            value={ address }
+                            disabled />
+        } else {
+            inputField = <input type='text' 
+                            placeholder='Klaytn address to give right to vote' 
+                            onChange={ this.onAddressChange }
+                            value={ address } />
+        }
+
         return (
             <div>
                 <h2>Chairperson</h2>
                 <form onSubmit={ this.giveRightToVote }>
-                    <input type='text' 
-                        placeholder='Klaytn address to give right to vote' 
-                        onChange={ this.onAddressChange }
-                        value={ address } />
+                    { inputField }
                     <input type='submit' value='Give right to vote' />
                 </form>
             </div>
