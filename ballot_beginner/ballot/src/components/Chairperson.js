@@ -42,15 +42,22 @@ class Chairperson extends React.Component {
             isInProgress: true
         });
 
-        // TODO validate address
+        if (caver.utils.isAddress(address)) {
+            this.props.contract.methods.giveRightToVote(address).send({
+                from: caver.klay.accounts.wallet[0].address,
+                gas: '300000'
+            })
+            .once('transactionHash', console.log)
+            .once('receipt', this.invalidate)
+            .once('error', this.invalidate);
+        } else {
+            alert('Invalid voter address');
+            this.setState({
+                isInProgress: false,
+                address: ''
+            });
+        }
         
-        this.props.contract.methods.giveRightToVote(address).send({
-            from: caver.klay.accounts.wallet[0].address,
-            gas: '300000'
-        })
-        .once('transactionHash', console.log)
-        .once('receipt', this.invalidate)
-        .once('error', this.invalidate);
     }
 
     render() {

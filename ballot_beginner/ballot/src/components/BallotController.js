@@ -1,5 +1,6 @@
 import React from 'react'
 import Ballot from './Ballot'
+import caver from '../klaytn/caver';
 
 class BallotController extends React.Component {
     constructor(props) {
@@ -12,18 +13,14 @@ class BallotController extends React.Component {
     }
 
     handleBallotContractAddress = (e) => {
-        const val = e.target.value;
-        // TODO validate val
         this.setState({
-            ballotAddress: val            
+            ballotAddress: e.target.value
         });
     }
 
     handleVoterPrivateKey = (e) => {
-        const val = e.target.value;
-        // TODO validate val
         this.setState({
-            voterKey: val
+            voterKey: e.target.value
         })
     }
 
@@ -34,6 +31,17 @@ class BallotController extends React.Component {
         //     voterKey: '0x43ddb044e96555cd64fabde34de59712c0ee9bcdbfd927f8ede30641f9ad6bba'
         // });
         const { ballotAddress, voterKey } = this.state;
+       
+        if (!caver.utils.isAddress(ballotAddress)) {
+            alert('Invalid contract address');
+            return;
+        }
+
+        if(!caver.utils.isValidPrivateKey(voterKey)) {
+            alert('Invalid private key');
+            return;
+        }
+        
         this.ballotRef.current.setup(ballotAddress, voterKey);
     }
 
