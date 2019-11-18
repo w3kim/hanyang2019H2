@@ -66,27 +66,24 @@ class Voting extends React.Component {
             return (<div>Voter only</div>);
         }
         return (
-            <div class="container">
-                <hr />
+            <div>
+                <h2>Voting</h2>
                 <div>
-                    <h2 class="subtitle">Proposals</h2>
-                    <div>
-                        <form onSubmit={ this.vote }>
-                            { proposals.map((pr, i) => {
-                                let sel = <input type="radio" value={i} 
-                                        selected={ selectedProposal === i} 
-                                        onChange={ this.onSelectedProposal }
-                                        name="proposal" />;
-                                return (<div key={i}>
-                                    <span><label>{ caver.utils.hexToUtf8(pr.name) }: </label></span>
-                                    <span>
-                                        {voted ? pr.voteCount : sel}
-                                    </span>
-                                </div>);
-                            })}
-                            {voted ? <input type="submit" value="Vote" disabled /> : <input type="submit" value="Vote" /> }
-                        </form>
-                    </div>
+                    <form onSubmit={ this.vote }>
+                        { proposals.map((pr, i) => {
+                            let sel = <input type="radio" value={i} 
+                                    selected={ selectedProposal === i} 
+                                    onChange={ this.onSelectedProposal }
+                                    name="proposal" />;
+                            return (<div key={i}>
+                                <span><label>{ caver.utils.hexToUtf8(pr.name) }: </label></span>
+                                <span>
+                                    {voted ? pr.voteCount : sel}
+                                </span>
+                            </div>);
+                        })}
+                        {voted ? <input type="submit" value="Vote" disabled /> : <input type="submit" value="Vote" /> }
+                    </form>
                 </div>
             </div>
         )

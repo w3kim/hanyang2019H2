@@ -26,10 +26,10 @@ class BallotController extends React.Component {
 
     load = () => {
         // TEST only
-        // this.setState({
-        //     ballotAddress: '0xFD36A83913eB69D3a2b3950507518b8a29905C6F',
-        //     voterKey: '0x43ddb044e96555cd64fabde34de59712c0ee9bcdbfd927f8ede30641f9ad6bba'
-        // });
+        this.setState({
+            ballotAddress: '0xFD36A83913eB69D3a2b3950507518b8a29905C6F',
+            voterKey: '0x43ddb044e96555cd64fabde34de59712c0ee9bcdbfd927f8ede30641f9ad6bba'
+        });
         const { ballotAddress, voterKey } = this.state;
        
         if (!caver.utils.isAddress(ballotAddress)) {
@@ -48,32 +48,39 @@ class BallotController extends React.Component {
     render() {
         const { ballotAddress, voterKey } = this.state;
         return (
-            <div>
-                <h1>Ballot</h1>
-                <div>
-                    <span>Ballot Address</span>
-                    <span>
-                        <input
-                            placeholder="Ballot contract address"
-                            value={ ballotAddress }
-                            onChange = { this.handleBallotContractAddress }
-                        />
-                    </span>
+            <div class="section">
+                <div class="container">
+                    <div class="field">
+                        <label class="label">Ballot Address</label>
+                        <div class="control">
+                            <input
+                                class="input"
+                                type="text"
+                                placeholder="Ballot contract address"
+                                value={ ballotAddress }
+                                onChange = { this.handleBallotContractAddress }
+                            />
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Voter Key</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input
+                                class="input is-success" 
+                                type="text"
+                                placeholder="Voter private key"
+                                value={ voterKey }
+                                onChange = { this.handleVoterPrivateKey }
+                            />
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                        </div>                    
+                    </div>
+                    <button class='button is-info' onClick = { this.load }>Load</button>
                 </div>
-                <div>
-                    <span>Voter Key</span>
-                    <span>
-                        <input
-                            placeholder="Voter private key"
-                            value={ voterKey }
-                            onChange = { this.handleVoterPrivateKey }
-                        />
-                    </span>
-                </div>
-                <button onClick = { this.load }>Load</button>
-                <div>
-                    <Ballot ref={ this.ballotRef } />
-                </div>
+                <Ballot ref={ this.ballotRef } />
             </div>
         )
     }
