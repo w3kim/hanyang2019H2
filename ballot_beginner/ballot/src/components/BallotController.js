@@ -52,7 +52,7 @@ class BallotController extends React.Component {
                 <div class="container">
                     <div class="field">
                         <label class="label">Ballot Address</label>
-                        <div class="control">
+                        <div class="control has-icons-left">
                             <input
                                 class="input"
                                 type="text"
@@ -60,12 +60,15 @@ class BallotController extends React.Component {
                                 value={ ballotAddress }
                                 onChange = { this.handleBallotContractAddress }
                             />
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-poll"></i>
+                            </span>
                         </div>
                     </div>
                     
                     <div class="field">
                         <label class="label">Voter Key</label>
-                        <div class="control has-icons-left has-icons-right">
+                        <div class="control has-icons-left">
                             <input
                                 class="input is-success" 
                                 type="text"

@@ -3,41 +3,8 @@ const Caver = require('caver-js');
 const caver = new Caver('wss://api.baobab.klaytn.net:8652/');
 
 const acct = caver.klay.accounts.wallet.add('0xdf1424179fd2f3cceaf4f1c11959f10b7c88646a1f77cbf07a551a504bc07e32');
-const ADDRESS = '0x083EcB4bc5Fb0e1C535276aD7447e006Cd69a439';
+const ADDRESS = '0x50C868f1b1b0393d3ECDda2f81054e387F824B61';
 const ABI = [
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getBalance",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "balances",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
 	{
 		"constant": false,
 		"inputs": [
@@ -83,29 +50,46 @@ const ABI = [
 		],
 		"name": "Sent",
 		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balances",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getBalance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
 ];
 
 (async () => {
 	const contract = new caver.klay.Contract(ABI, ADDRESS);
-	await contract.methods.getBalance().call({ from: acct.address }, function (err, data) {
-		if (err) {
-			console.err(err);
-		} else {
-			console.log(data);
-		}
-	})
-
-	await contract.methods.balances(acct.address).call({ from: acct.address }, function (err, data) {
-		if (err) {
-			console.err(err);
-		} else {
-			console.log(data);
-		}
-	});
-
 	await contract.events.Sent(function (error, result) {
-		console.log("event >>> ", result, error);
+		console.log("event >>> ", error, result);
 	});
 
 })();

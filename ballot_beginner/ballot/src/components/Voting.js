@@ -70,7 +70,31 @@ class Voting extends React.Component {
                 <hr />
                 <div>
                     <h2 class="subtitle">Proposals</h2>
-                    <div>
+                    <table class="table is-hoverable">
+                        <thead>
+                            <tr>
+                                <td>Pos</td>
+                                <td>Item</td>
+                                {voted && <td>Votes</td>}                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            { proposals.map((pr, i) => {
+                                // TODO wire onChange event for each table row
+                                let sel = <input type="radio" value={i} 
+                                        selected={ selectedProposal === i} 
+                                        onChange={ this.onSelectedProposal }
+                                        name="proposal" />;
+                                return (<tr key={i}>
+                                    <td>{i}</td>
+                                    <td>{ caver.utils.hexToUtf8(pr.name) }</td>
+                                    {voted && <td>{pr.voteCount}</td>}                                    
+                                </tr>);
+                            })}
+                        </tbody>
+                    </table>
+                    {!voted && <button class="button is-info" value="Vote" />}
+                    {/* <div>
                         <form onSubmit={ this.vote }>
                             { proposals.map((pr, i) => {
                                 let sel = <input type="radio" value={i} 
@@ -86,7 +110,7 @@ class Voting extends React.Component {
                             })}
                             {voted ? <input type="submit" value="Vote" disabled /> : <input type="submit" value="Vote" /> }
                         </form>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         )

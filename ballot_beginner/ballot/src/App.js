@@ -7,7 +7,10 @@ function App() {
       <section class="hero is-info is-bold">
         <div class="hero-body">
           <div class="container">
-            <h1 class="title">Ballot</h1>
+            <figure class="image is-128x128">
+              <img src="election.png" />
+            </figure>
+            <h1 class="title">Ballot BApp</h1>
             <h2 class="subtitle">Vote Vote Vote</h2>
           </div>
         </div>
