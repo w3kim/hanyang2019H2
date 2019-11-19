@@ -6,8 +6,8 @@ class BallotController extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ballotAddress: '',
-            voterKey: '',
+            ballotAddress: '0xFD36A83913eB69D3a2b3950507518b8a29905C6F',
+            voterKey: '0x43ddb044e96555cd64fabde34de59712c0ee9bcdbfd927f8ede30641f9ad6bba',
             isInvalidBallotEntered: false,
             isInvalidVoterKeyEntered: false
         };

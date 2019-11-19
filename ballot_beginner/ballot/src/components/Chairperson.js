@@ -15,7 +15,7 @@ class Chairperson extends React.Component {
     isChairperson = async () => {
         const wallet = caver.klay.accounts.wallet;
         const chairperson = await this.props.contract.methods.chairperson().call();
-        
+
         this.setState({
             isChairperson: wallet[0].address === chairperson.toLowerCase()
         });
@@ -47,9 +47,9 @@ class Chairperson extends React.Component {
                 from: caver.klay.accounts.wallet[0].address,
                 gas: '300000'
             })
-            .once('transactionHash', console.log)
-            .once('receipt', this.invalidate)
-            .once('error', this.invalidate);
+                .once('transactionHash', console.log)
+                .once('receipt', this.invalidate)
+                .once('error', this.invalidate);
         } else {
             alert('Invalid voter address');
             this.setState({
@@ -57,37 +57,54 @@ class Chairperson extends React.Component {
                 address: ''
             });
         }
-        
+
     }
 
     render() {
         const { address, isChairperson, isInProgress } = this.state;
         if (!isChairperson) {
             return (
-                <div>Chairperson only</div>
+                <div>
+                    <hr />
+                    <p class="has-text-centered is-warning">Chairperson only</p>
+                </div>
             )
         }
 
         let inputField;
         if (isInProgress) {
-            inputField = <input type='text' 
-                            placeholder='Klaytn address to give right to vote' 
-                            onChange={ this.onAddressChange }
-                            value={ address }
-                            disabled />
+            inputField = <input type='text'
+                class="input"
+                placeholder='Klaytn address to give right to vote'
+                onChange={this.onAddressChange}
+                value={address}
+                disabled />
         } else {
-            inputField = <input type='text' 
-                            placeholder='Klaytn address to give right to vote' 
-                            onChange={ this.onAddressChange }
-                            value={ address } />
+            inputField = <input type='text'
+                class="input"
+                placeholder='Klaytn address to give right to vote'
+                onChange={this.onAddressChange}
+                value={address} />
         }
 
         return (
-            <div>
-                <h2>Chairperson</h2>
-                <form onSubmit={ this.giveRightToVote }>
-                    { inputField }
-                    <input type='submit' value='Give right to vote' />
+            <div class="container">
+                <hr />
+                <h2 class="subtitle has-text-centered">Chairperson Menu</h2>
+                <form onSubmit={this.giveRightToVote}>
+                    <div class="field">
+                        <label class="label">New voter address</label>
+                        <div class="control has-icons-left has-icons-right">
+                            {inputField}
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-plus-square"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <input class="button is-info is-medium is-fullwidth" type='submit' value='Give right to vote' />
                 </form>
             </div>
         )
