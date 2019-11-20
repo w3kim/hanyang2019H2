@@ -1,15 +1,16 @@
 import React from 'react';
 import caver from '../klaytn/caver'
+import Delegate from './Delegate'
 
-class Voting extends React.Component {
+class Voter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             proposals: [],
             selectedProposal: -1,
-            voted: false,
-            isVoter: false,
-            isInProgress: false
+            isInProgress: false,
+            hasLoaded: false,
+            voter: null
         }
         this.refresh();
     }
@@ -27,10 +28,10 @@ class Voting extends React.Component {
 
         this.setState({
             proposals: p,
-            voted: v.voted,
             selectedProposal: v.voted ? Number(v.vote) : -1,
-            isVoter: v.weight > 0 || v.voted,
-            isInProgress: inProgress
+            voter: v,
+            isInProgress: inProgress,
+            hasLoaded: true
         });
     }
 
@@ -67,43 +68,78 @@ class Voting extends React.Component {
     }
 
     render() {
-        const { proposals, selectedProposal, voted, isVoter, isInProgress } = this.state;
-        if (!isVoter) {
-            return (<div>Voter only</div>);
-        }
+        const { proposals, selectedProposal, isInProgress, hasLoaded, voter } = this.state;
+
         let body;
-        if (!isInProgress) {
+        if (!hasLoaded) {
+            return <div class="container">
+                <hr />
+                <div>
+                    <div>Loading ...</div>
+                </div>
+            </div>
+        }
+
+        if (!voter) {
             body = <div>
+                <span class="tag is-danger is-light">Not a registered voter</span>
+            </div>;
+        }
+        else if (!isInProgress) {
+
+            let tags = <div class="tags">
+                <span class="tag">Has {voter.weight} vote(s)</span>
+                {Number(voter.delegate) === 0 && <span class="tag">{voter.voted ? "Already voted" : "Has not voted"}</span>}
+                {Number(voter.delegate) !== 0 && <span class="tag">Delegated to {voter.delegate}</span>}
+            </div>
+
+            let votingProposals = <div>            
+                {voter.voted ?
+                    <h2 class="subtitle has-text-centered">Voting result</h2> :
+                    <h2 class="subtitle has-text-centered">You may vote for one of the following proposals</h2>                    
+                }
                 <table class="table is-hoverable is-fullwidth">
                     <thead>
                         <tr style={{ background: '#eeeeee' }}>
                             <th>Position</th>
                             <th>Item</th>
-                            {voted && <th>Votes</th>}
+                            {voter.voted && <th>Votes</th>}
                         </tr>
                     </thead>
                     <tbody>
                         {proposals.map((pr, i) => {
                             let ret;
-                            if (voted) {
+                            if (voter.voted && Number(voter.delegate) === 0) {
                                 ret = <tr key={i} class={i === selectedProposal && "is-selected"}>
                                     <td>{i + 1}</td>
                                     <td>{caver.utils.hexToUtf8(pr.name)}</td>
-                                    {voted && <td>{pr.voteCount}</td>}
+                                    {voter.voted && <td>{pr.voteCount}</td>}
                                 </tr>
                             } else {
-                                ret = <tr key={i} onClick={() => this.onSelectedProposal(i)} class={i === selectedProposal && "is-selected"}>
+                                ret = 
+                                <tr key={i} 
+                                    onClick={() => this.onSelectedProposal(i)} 
+                                    class={i === selectedProposal && Number(voter.delegate) === 0 && "is-selected"}>
                                     <td>{i + 1}</td>
                                     <td>{caver.utils.hexToUtf8(pr.name)}</td>
-                                    {voted && <td>{pr.voteCount}</td>}
+                                    {voter.voted && <td>{pr.voteCount}</td>}
                                 </tr>
                             }
                             return (ret);
                         })}
                     </tbody>
                 </table>
-                {!voted && <button class='button is-info is-medium is-fullwidth' onClick={this.vote}>Vote</button>}
+                {!voter.voted && <button class='button is-info is-medium is-fullwidth' onClick={this.vote}>Vote</button>}
             </div>
+
+            body = <div>
+                <h1 class="title has-text-centered">Voter Menu</h1>
+                {tags}
+                {votingProposals}
+                <hr />
+                {!voter.voted && <Delegate contract={this.props.contract} refresh={this.refresh} />}                
+            </div>
+
         } else {
             body = <progress class="progress is-large is-primary" max="100">60%</progress>
         }
@@ -111,13 +147,10 @@ class Voting extends React.Component {
         return (
             <div class="container">
                 <hr />
-                <div>
-                    <h2 class="subtitle has-text-centered">Proposals</h2>
-                    {body}
-                </div>
+                {body}
             </div>
         )
     }
 }
 
-export default Voting;
+export default Voter;

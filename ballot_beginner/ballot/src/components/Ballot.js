@@ -1,6 +1,6 @@
 import React from 'react';
 import caver from '../klaytn/caver'
-import Voting from './Voting'
+import Voter from './Voter'
 import Chairperson from './Chairperson';
 
 const ABI = require("../assets/ballot_abi.json");
@@ -36,7 +36,7 @@ class Ballot extends React.Component {
         return (
             <div>
                 <div>
-                    {contractAddress && voterAcct && <Voting 
+                    {contractAddress && voterAcct && <Voter 
                         contract={ contract }
                     />}
                     {contractAddress && voterAcct && <Chairperson
