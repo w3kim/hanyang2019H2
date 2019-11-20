@@ -79,8 +79,8 @@ class Voter extends React.Component {
                 </div>
             </div>
         }
-
-        if (!voter) {
+        
+        if (Number(voter.weight) === 0 && !voter.voted) {
             body = <div>
                 <span class="tag is-danger is-light">Not a registered voter</span>
             </div>;

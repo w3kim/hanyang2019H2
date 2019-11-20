@@ -6,8 +6,8 @@ class BallotController extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ballotAddress: '0xFD36A83913eB69D3a2b3950507518b8a29905C6F',
-            voterKey: '0x43ddb044e96555cd64fabde34de59712c0ee9bcdbfd927f8ede30641f9ad6bba',
+            ballotAddress: '0x70eE404C9461Cc448435d9e586eAdC80BA757522',
+            voterKey: '',
             isInvalidBallotEntered: false,
             isInvalidVoterKeyEntered: false
         };
@@ -27,11 +27,6 @@ class BallotController extends React.Component {
     }
 
     load = () => {
-        // TEST only
-        // this.setState({
-        //     ballotAddress: '0xFD36A83913eB69D3a2b3950507518b8a29905C6F',
-        //     voterKey: '0x43ddb044e96555cd64fabde34de59712c0ee9bcdbfd927f8ede30641f9ad6bba'
-        // });
         const { ballotAddress, voterKey } = this.state;
 
         this.setState({
@@ -51,7 +46,7 @@ class BallotController extends React.Component {
             <div class="section">
                 <div class="container">
                     <div class="field">
-                        <label class="label">Ballot Address</label>
+                        <label class="label">Ballot Address (try 0x70eE404C9461Cc448435d9e586eAdC80BA757522)</label>
                         <div class="control has-icons-left">
                             <input
                                 class="input"

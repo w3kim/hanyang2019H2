@@ -20,10 +20,6 @@ class Ballot extends React.Component {
     }
 
     render() {
-        // TEST
-        // contract address: 0xFD36A83913eB69D3a2b3950507518b8a29905C6F
-        // chair: 0x43ddb044e96555cd64fabde34de59712c0ee9bcdbfd927f8ede30641f9ad6bba
-        //
         const { contractAddress, voterKey } = this.state;
         const contract = new caver.klay.Contract(ABI, contractAddress);
         let voterAcct = null;
