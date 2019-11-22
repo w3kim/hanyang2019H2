@@ -6,7 +6,7 @@ class BallotController extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ballotAddress: '0x70eE404C9461Cc448435d9e586eAdC80BA757522',
+            ballotAddress: '',
             voterKey: '',
             isInvalidBallotEntered: false,
             isInvalidVoterKeyEntered: false
@@ -23,18 +23,20 @@ class BallotController extends React.Component {
     handleVoterPrivateKey = (e) => {
         this.setState({
             voterKey: e.target.value
-        })
+        });
     }
 
     load = () => {
         const { ballotAddress, voterKey } = this.state;
 
-        this.setState({
-            isInvalidBallotEntered: !caver.utils.isAddress(ballotAddress),
-            isInvalidVoterKeyEntered: !caver.utils.isValidPrivateKey(voterKey)
-        })
+        let isInvalidBallotEntered = !caver.utils.isAddress(ballotAddress);
+        let isInvalidVoterKeyEntered = !caver.utils.isValidPrivateKey(voterKey); 
 
-        const { isInvalidBallotEntered, isInvalidVoterKeyEntered } = this.state;
+        this.setState({
+            isInvalidBallotEntered: isInvalidBallotEntered,
+            isInvalidVoterKeyEntered: isInvalidVoterKeyEntered
+        });
+
         if (isInvalidBallotEntered || isInvalidVoterKeyEntered) return;
 
         this.ballotRef.current.setup(ballotAddress, voterKey);
